@@ -26,7 +26,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <TimeLib.h>
 
-#define LEDSPIN          20
+#define LEDSPIN          23
 #define NUMPIXELS       130
 #define TIME_HEADER     "T"   // Header tag for serial time sync message
 
@@ -47,7 +47,7 @@ void setup() {
 	setSyncProvider(getTeensy3Time);
   
 	Serial.begin(115200);
-	while (!Serial);  // Wait for Arduino Serial Monitor to open
+	//while (!Serial);  // Wait for Arduino Serial Monitor to open
 	delay(100);
 	if (timeStatus()!= timeSet) {
 		Serial.println("Unable to sync with the RTC");
@@ -77,10 +77,10 @@ void loop() {
 // begin parsing section
 
 void updateTime() {
-	//clearStrip();
+	clearStrip();
 	updateHour();
 	updateMinute();
-	//leds.show();
+	leds.show();
 	if (verboseMode) digitalClockDisplay();
 	timeCheck = micros();
 }
@@ -126,7 +126,7 @@ void updateMinute() {
 			turnOn(type, "TY");
 		}
 		byte remain = mn%10;
-		if (remain == 0)       turnOn("maxm", "MAXM");
+		if (remain == 0)  ;     //turnOn("maxm", "MAXM");
 		else if (remain == 1)  turnOn(type, "ONE");
 		else if (remain == 2)  turnOn(type, "TWO");
 		else if (remain == 3)  turnOn(type, "THREE");
